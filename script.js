@@ -59,20 +59,29 @@ const question = document.getElementById("question");
 const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
 let yesClicks = 0;
 
-function randomPosition(btn) {
+// Movimiento corto, siempre visible
+function nudgePosition(btn) {
+  const step = 80; // distancia corta de movimiento
   const padding = 20;
+
+  const rect = btn.getBoundingClientRect();
+  let newLeft = rect.left + (Math.random() * step * 2 - step);
+  let newTop  = rect.top  + (Math.random() * step * 2 - step);
+
   const maxX = window.innerWidth - btn.offsetWidth - padding;
   const maxY = window.innerHeight - btn.offsetHeight - padding;
-  const x = Math.random() * maxX;
-  const y = Math.random() * maxY;
-  btn.style.left = x + "px";
-  btn.style.top = y + "px";
+
+  newLeft = Math.max(padding, Math.min(maxX, newLeft));
+  newTop  = Math.max(padding, Math.min(maxY, newTop));
+
+  btn.style.left = newLeft + "px";
+  btn.style.top  = newTop  + "px";
 }
 
-// 🖥️ PC: el botón "Sí" se escapa cuando el mouse se le acerca
+// 🖥️ PC: el botón "Sí" se mueve un poco cada vez que el mouse se le acerca
 if (!isMobile) {
   yesBtn.addEventListener("mouseenter", () => {
-    randomPosition(yesBtn);
+    nudgePosition(yesBtn);
   });
 }
 
@@ -92,7 +101,7 @@ yesBtn.addEventListener("click", () => {
 
     const linkBtn = document.createElement("a");
     linkBtn.textContent = "Dar click aquí";
-    linkBtn.href = "https://wa.me/18098624230"; // 👈 PON AQUÍ TU NÚMERO (ej: 1809XXXXXXX)
+    linkBtn.href = "https://wa.me/18098624230"; // 👈 pon tu número aquí
     linkBtn.target = "_blank";
     linkBtn.className = "btn yes";
     linkBtn.style.position = "relative";
