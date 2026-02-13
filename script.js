@@ -61,7 +61,7 @@ let yesClicks = 0;
 
 // Movimiento corto, siempre visible
 function nudgePosition(btn) {
-  const step = 40; // distancia corta de movimiento
+  const step = 35; // distancia corta de movimiento
   const padding = 20;
 
   const rect = btn.getBoundingClientRect();
