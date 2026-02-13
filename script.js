@@ -59,14 +59,18 @@ const question = document.getElementById("question");
 const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
 let yesClicks = 0;
 
-// Movimiento corto, siempre visible
+// Movimiento sutil, juguetón y siempre dentro de la vista
 function nudgePosition(btn) {
-  const step = 35; // distancia corta de movimiento
-  const padding = 20;
+  const step = 22;     // ajusta aquí si quieres más o menos movimiento
+  const padding = 16; // margen para no pegarse a los bordes
 
   const rect = btn.getBoundingClientRect();
-  let newLeft = rect.left + (Math.random() * step * 2 - step);
-  let newTop  = rect.top  + (Math.random() * step * 2 - step);
+
+  const dx = (Math.random() * 2 - 1) * step;
+  const dy = (Math.random() * 2 - 1) * step;
+
+  let newLeft = rect.left + dx;
+  let newTop  = rect.top  + dy;
 
   const maxX = window.innerWidth - btn.offsetWidth - padding;
   const maxY = window.innerHeight - btn.offsetHeight - padding;
@@ -74,8 +78,8 @@ function nudgePosition(btn) {
   newLeft = Math.max(padding, Math.min(maxX, newLeft));
   newTop  = Math.max(padding, Math.min(maxY, newTop));
 
-  btn.style.left = newLeft + "px";
-  btn.style.top  = newTop  + "px";
+  btn.style.left = `${newLeft}px`;
+  btn.style.top  = `${newTop}px`;
 }
 
 // 🖥️ PC: el botón "Sí" se mueve un poco cada vez que el mouse se le acerca
@@ -101,7 +105,7 @@ yesBtn.addEventListener("click", () => {
 
     const linkBtn = document.createElement("a");
     linkBtn.textContent = "Dar click aquí";
-    linkBtn.href = "https://wa.me/18098624230"; // 👈 pon tu número aquí
+    linkBtn.href = "https://wa.me/XXXXXXXXXXXX"; // 👈 pon tu número aquí
     linkBtn.target = "_blank";
     linkBtn.className = "btn yes";
     linkBtn.style.position = "relative";
