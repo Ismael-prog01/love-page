@@ -8,6 +8,7 @@ function resize() {
 window.addEventListener("resize", resize);
 resize();
 
+// Fondo espacial animado
 const stars = Array.from({ length: 120 }, () => ({
   x: Math.random() * canvas.width,
   y: Math.random() * canvas.height,
@@ -47,9 +48,9 @@ function drawSpace() {
 
   requestAnimationFrame(drawSpace);
 }
-
 drawSpace();
 
+// Lógica de interacción
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const message = document.getElementById("message");
@@ -68,12 +69,14 @@ function randomPosition(btn) {
   btn.style.top = y + "px";
 }
 
+// 🖥️ PC: el botón "Sí" se escapa cuando el mouse se le acerca
 if (!isMobile) {
-  noBtn.addEventListener("mouseenter", () => {
+  yesBtn.addEventListener("mouseenter", () => {
     randomPosition(yesBtn);
   });
 }
 
+// 📱 Celular: flujo de preguntas
 yesBtn.addEventListener("click", () => {
   if (!isMobile) return;
 
@@ -85,29 +88,29 @@ yesBtn.addEventListener("click", () => {
     question.textContent = "¿Completamente segura de que sí?";
   } else if (yesClicks === 3) {
     question.textContent = "¿Cómo puedo hacerte cambiar a un no?";
-    yesBtn.remove();
+    document.querySelector(".buttons").innerHTML = "";
 
-    const btn1 = document.createElement("button");
-    const btn2 = document.createElement("button");
+    const linkBtn = document.createElement("a");
+    linkBtn.textContent = "Dar click aquí";
+    linkBtn.href = "https://wa.me/18098624230"; // 👈 PON AQUÍ TU NÚMERO (ej: 1809XXXXXXX)
+    linkBtn.target = "_blank";
+    linkBtn.className = "btn yes";
+    linkBtn.style.position = "relative";
+    linkBtn.style.left = "0";
+    linkBtn.style.top = "0";
 
-    btn1.textContent = "No";
-    btn2.textContent = "No";
-    btn1.className = "btn no";
-    btn2.className = "btn no";
-    btn1.style.left = "0";
-    btn2.style.right = "0";
-
-    btn1.onclick = showNoMessage;
-    btn2.onclick = showNoMessage;
-
-    document.querySelector(".buttons").appendChild(btn1);
-    document.querySelector(".buttons").appendChild(btn2);
+    document.querySelector(".buttons").appendChild(linkBtn);
   }
 });
 
+// ❌ Botón "No" en PC y celular
 function showNoMessage() {
-  message.textContent = "Ese no se ve muy convencido… prueba con el sí 💖";
+  message.textContent =
+    "Corazón hermoso, sé que muchas veces te haré incomodar o sentirte mal, " +
+    "pero quiero que sepas que lo que menos quiero es que estés o te sientas mal. " +
+    "Te adoro un gugol y más allá, más de lo que te imaginas, y nunca dejaré de hacerlo.";
   message.classList.remove("hidden");
 }
 
 noBtn.addEventListener("click", showNoMessage);
+
